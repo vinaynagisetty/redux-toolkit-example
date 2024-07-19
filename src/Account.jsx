@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 function Account(){
  let data= useSelector(
-    (state)=>state.user
+    (state)=>state
   )
   console.log(data);
     return(
@@ -20,10 +20,42 @@ function Account(){
         </thead>
         <tbody>
           <tr>
-            <td>{data.fullName}</td>
-            <td>{data.amount}</td>
-            <td>{data.mobileNumber}</td>
+            <td>{data.user.fullName}</td>
+            <td>{data.user.amount}</td>
+            <td>{data.user.mobileNumber}</td>
           </tr>
+        </tbody>
+
+      </table>
+      <h2 className="text-primary">Transaction details</h2>
+      <table className="table table-bordered w-50">
+        <thead>
+          <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Time Stamp</th> 
+          </tr>
+     
+        </thead>
+        <tbody>
+          {
+            data.transactions.map(
+              (item,index)=>{
+                return <tr key={index} >
+                 <td>{item.name}</td>
+                 <td>{item.type}</td>
+                 <td>{item.amount}</td>
+                 <td>{item.timestamp}</td>
+                </tr>
+              }
+            )
+          }
+          {/* <tr>
+            <td>{data.user.fullName}</td>
+            <td>{data.user.amount}</td>
+            <td>{data.user.mobileNumber}</td>
+          </tr> */}
         </tbody>
 
       </table>

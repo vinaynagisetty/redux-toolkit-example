@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { withdraw,deposit,updateName,updateMobileNumber } from "./store";
+import { useDispatch, useSelector } from "react-redux";
+import { withdraw,deposit,updateName,updateMobileNumber, updateTransactionDetails} from "./store";
 
 function Form(){
     let [amount,setAmount]=useState()
     let [name,setName]=useState('')
     let [mobile,setMobile]=useState(null)
     let dispatch= useDispatch();
+   let fullName= useSelector(
+    (state)=>state.user.fullName
+   )
     return (
    
     
@@ -24,13 +27,27 @@ function Form(){
             <button className="btn btn-primary col-1 mx-2"  onClick={
                 ()=>{
                     dispatch(deposit(amount));
+                    dispatch(updateTransactionDetails({
+                    type:"Credit",
+                    amount:amount,
+                    name:fullName,
+                    timestamp:new Date().toISOString()
+
+                    }))
                     setAmount("")
                 }
-            }>Update</button>
+            }>Deposit</button>
             <button className="btn btn-danger col-1 mx-2" 
             onClick={
                 ()=>{
                     dispatch(withdraw(amount));
+                    dispatch(updateTransactionDetails({
+                        type:"Debit",
+                        amount:amount,
+                        name:fullName,
+                        timestamp:new Date().toISOString()
+    
+                        }))
                     setAmount("")
                 }
             }>Withdrawn</button>

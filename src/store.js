@@ -29,13 +29,26 @@ let userSlice = createSlice({
         }
     }
 })
+const transactions=[];
+
+let transactionSlice=createSlice({
+    name:"Transaction",
+    initialState:transactions,
+    reducers:{
+        updateTransactionDetails:(state,action)=>{
+            state.push(action.payload)
+        }
+    }
+})
 
 const store = configureStore(
     {
         reducer: {
-            user: userSlice.reducer
+            user: userSlice.reducer,
+            transactions:transactionSlice.reducer
         }
     }
 )
-export const {updateMobileNumber,updateName,deposit,withdraw} =userSlice.actions;
+export const {updateMobileNumber,updateName,deposit,withdraw,reset} =userSlice.actions;
+export const {updateTransactionDetails}=transactionSlice.actions;
 export default store;
